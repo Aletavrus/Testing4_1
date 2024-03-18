@@ -82,7 +82,6 @@ namespace Debug_4_1
                 {
                     Array.Copy(_items, 0, _items, count, _size);
                 }
-
                 if (_items == collection._items)
                 {
                     Array.Copy(_items, 0, _items, count, _size);
