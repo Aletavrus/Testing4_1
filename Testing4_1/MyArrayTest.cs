@@ -1,4 +1,5 @@
 using Debug_4_1;
+using Xunit;
 
 namespace Testing4_1
 {
@@ -165,8 +166,24 @@ namespace Testing4_1
         [Fact]
         public void AnyTrue()
         {
-
+            Func<string, bool> condition = Condition;
+            MyArray<string> strings = new MyArray<string>(3);
+            for (int i = 0; i< 2; i++)
+            {
+                strings.Add("ab");
+            }
+            strings.Add("abcdef");
+            bool result = strings.Any();
+            Assert.True(result);
         }
 
+        private static bool Condition(string x)
+        {
+            return x.Length > 5;
+        }
+
+
+
+        #endregion
     }
 }
