@@ -7,9 +7,14 @@ D:\Git Projects\Debug 4-1\obj\Debug\net8.0\Debug 4-1.GeneratedMSBuildEditorConfi
 D:\Git Projects\Debug 4-1\obj\Debug\net8.0\Debug 4-1.AssemblyInfoInputs.cache
 D:\Git Projects\Debug 4-1\obj\Debug\net8.0\Debug 4-1.AssemblyInfo.cs
 D:\Git Projects\Debug 4-1\obj\Debug\net8.0\Debug 4-1.csproj.CoreCompileInputs.cache
-D:\Git Projects\Debug 4-1\obj\Debug\net8.0\Debug 4-1.sourcelink.json
 D:\Git Projects\Debug 4-1\obj\Debug\net8.0\Debug 4-1.dll
 D:\Git Projects\Debug 4-1\obj\Debug\net8.0\refint\Debug 4-1.dll
 D:\Git Projects\Debug 4-1\obj\Debug\net8.0\Debug 4-1.pdb
 D:\Git Projects\Debug 4-1\obj\Debug\net8.0\Debug 4-1.genruntimeconfig.cache
 D:\Git Projects\Debug 4-1\obj\Debug\net8.0\ref\Debug 4-1.dll
+D:\Git Projects\Debug 4-1\obj\Debug\net8.0\Debug 4-1.csproj.AssemblyReference.cache
+D:\Git Projects\Debug 4-1\bin\Debug\net8.0\xunit.abstractions.dll
+D:\Git Projects\Debug 4-1\bin\Debug\net8.0\xunit.assert.dll
+D:\Git Projects\Debug 4-1\bin\Debug\net8.0\xunit.core.dll
+D:\Git Projects\Debug 4-1\bin\Debug\net8.0\xunit.execution.dotnet.dll
+D:\Git Projects\Debug 4-1\obj\Debug\net8.0\Debug 4-1.csproj.CopyComplete

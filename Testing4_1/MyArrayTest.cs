@@ -89,7 +89,7 @@ namespace Testing4_1
             {
                 arr.Add(i);
             }
-            MyArray<int> ints = new MyArray<int>(0);
+            MyArray<int> ints = null;
             try
             {
                 arr.AddRange(ints);
@@ -104,7 +104,6 @@ namespace Testing4_1
         public void AddRangeDifferent()
         {
             MyArray<int> arr = [];
-            bool result = false;
             for (int i = 0; i < 5; i++)
             {
                 arr.Add(i);
@@ -122,7 +121,6 @@ namespace Testing4_1
         public void AddRangeSame()
         {
             MyArray<int> arr = [];
-            bool result = false;
             for (int i = 0; i < 5; i++)
             {
                 arr.Add(i);
@@ -173,7 +171,7 @@ namespace Testing4_1
                 strings.Add("ab");
             }
             strings.Add("abcdef");
-            bool result = strings.Any();
+            bool result = strings.Any(condition);
             Assert.True(result);
         }
 
@@ -181,9 +179,6 @@ namespace Testing4_1
         {
             return x.Length > 5;
         }
-
-
-
         #endregion
     }
 }
