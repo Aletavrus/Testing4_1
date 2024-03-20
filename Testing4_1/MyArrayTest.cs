@@ -1,4 +1,6 @@
 using Debug_4_1;
+using System.Reflection;
+using System.Security.Cryptography;
 using Xunit;
 
 namespace Testing4_1
@@ -160,6 +162,7 @@ namespace Testing4_1
             Assert.False(result);
         }
         #endregion
+
         #region Any
         [Fact]
         public void AnyTrue()
@@ -293,7 +296,7 @@ namespace Testing4_1
             Assert.Equal(2, result);
         }
         #endregion
-        //add ContatinsNull if necessary
+
         #region Contains
         [Fact]
         public void ContainsNullFalse()
@@ -339,6 +342,7 @@ namespace Testing4_1
             Assert.False(chars.Contains(item));
         }
         #endregion
+
         #region CopyTo
         [Fact]
         public void CopyTo()
@@ -364,9 +368,210 @@ namespace Testing4_1
 
         #region First
         [Fact]
+        public void First()
+        {
+            MyArray<int> ints = [];
+            for (int i = 0; i < 8; i++)
+            {
+                ints.Add(i+1);
+            }
+            int result = ints.First(x => x>5 && x%2!=0);
+            Assert.Equal(7, result);
+        }
+        [Fact]
         public void FirstException()
         {
-
+            MyArray<int> ints = [];
+            for (int i = 0; i < 8; i++)
+            {
+                ints.Add(i + 1);
+            }
+            Assert.ThrowsAny<Exception>(() => ints.First(x => x>100));
         }
+        [Fact]
+        public void FirstNull()
+        {
+            MyArray<int> ints = [];
+            for (int i = 0; i < 8; i++)
+            {
+                ints.Add(i + 1);
+            }
+            int result = ints.First(null);
+            Assert.Equal(1, result);
+        }
+        #endregion
+
+        #region FirstOrDefault
+        [Fact]
+        public void Default()
+        {
+            MyArray<int> ints = [];
+            for (int i = 0; i < 8; i++)
+            {
+                ints.Add(i + 1);
+            }
+            Assert.Equal(default(int), ints.FirstOrDefault(x => x > 100));
+        }
+        [Fact]
+        public void FirstOrDefaultNull()
+        {
+            MyArray<int> ints = [];
+            for (int i = 0; i < 4; i++)
+            {
+                ints.Add(i + 1);
+            }
+            Assert.Equal(1, ints.FirstOrDefault(null));
+        }
+        [Fact]
+        public void FirstOrDefault()
+        {
+            MyArray<int> ints = [];
+            for (int i = 0; i < 8; i++)
+            {
+                ints.Add(i + 1);
+            }
+            Assert.Equal(6, ints.FirstOrDefault(x => x > 5 && x % 2 == 0));
+        }
+        #endregion
+        #region ForEach
+        [Fact]
+        public void ForEachException()
+        {
+            MyArray<int> ints = [];
+            for (int i = 0; i < 2; i++)
+            {
+                ints.Add(i + 1);
+            }
+            Assert.Throws<ArgumentNullException>(() => ints.ForEach(null));
+        }
+        [Fact]
+        public void ForEach()
+        {
+            MyArray<int> ints = [];
+            for (int i = 0; i < 2; i++)
+            {
+                ints.Add(i + 1);
+            }
+            int[] collection = { };
+            Action<int> action = (x) =>
+            {
+                Console.WriteLine($"Element multiplied by 2 = {x*2}");
+            };
+
+            ints.ForEach(action);
+        }
+        #endregion
+
+        #region IndexOf
+        [Fact]
+        public void IndexOf()
+        {
+            MyArray<int> ints = [];
+            for (int i = 0; i < 4; i++)
+            {
+                ints.Add(i + 1);
+            }
+            Assert.Equal(2, ints.IndexOf(3));
+        }
+        #endregion
+
+        #region Insert
+        [Fact]
+        public void InsertException()
+        {
+            MyArray<string> strings = [];
+            for (int i = 0; i< 4;i++)
+            {
+                strings.Add($"{i}");
+            }
+            Assert.Throws<ArgumentOutOfRangeException>(() => strings.Insert(5, "abc"));
+        }
+        [Fact]
+        public void Insert()
+        {
+            MyArray<string> strings = [];
+            for (int i = 0; i < 6; i++)
+            {
+                strings.Add($"{i}");
+            }
+            strings.Insert(5, "abc");
+            string[] collection = { "0", "1", "2", "3", "4", "abc", "5"};
+            Assert.Equal(collection, strings.ToArray());
+        }
+        #endregion
+
+        #region Max
+        [Fact]
+        public void MaxInt()
+        {
+            MyArray<int> ints = new MyArray<int>(5);
+            for (int i = 0; i < 5; i++)
+            {
+                ints.Add(i);
+            }
+            Assert.Equal(4, ints.Max());
+        }
+        [Fact]
+        public void MaxString()
+        {
+            MyArray<string> strings = [];
+            for (int i = 0; i < 6; i++)
+            {
+                strings.Add($"{i}");
+            }
+            strings.Add("abc");
+            Assert.Equal("abc", strings.Max());
+        }
+
+        [Fact]
+        public void MaxDouble()
+        {
+            MyArray<int> nums = [];
+            for (int i = 0; i < 3; i++)
+            {
+                nums.Add(i+1);
+            }
+            Func<int, double> projector = (x) => x/1.5;
+            Assert.Equal(2, nums.Max(projector));
+        }
+        #endregion
+
+        #region Min
+        [Fact]
+        public void MinInt()
+        {
+            MyArray<int> ints = new MyArray<int>(5);
+            for (int i = 0; i < 5; i++)
+            {
+                ints.Add(i);
+            }
+            Assert.Equal(0, ints.Min());
+        }
+        [Fact]
+        public void MinString()
+        {
+            MyArray<string> strings = [];
+            for (int i = 0; i < 6; i++)
+            {
+                strings.Add($"{i}");
+            }
+            strings.Add("abc");
+            Assert.Equal("0", strings.Min());
+        }
+
+        [Fact]
+        public void MinDouble()
+        {
+            MyArray<int> nums = [];
+            for (int i = 0; i < 3; i++)
+            {
+                int item = i++;
+                nums.Add(i);
+            }
+            Func<int, double> projector = (x) => x / 1.5;
+            double expected = (double)2/3;
+            Assert.Equal(expected, nums.Min(projector));
+        }
+        #endregion
     }
 }
