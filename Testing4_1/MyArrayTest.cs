@@ -361,5 +361,12 @@ namespace Testing4_1
             Assert.Equal("01234", result);
         }
         #endregion
+
+        #region First
+        [Fact]
+        public void FirstException()
+        {
+
+        }
     }
 }
