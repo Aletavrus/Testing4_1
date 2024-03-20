@@ -9,7 +9,7 @@ namespace Testing4_1
         [Fact]
         public void CapacityDefault()
         {
-            MyArray<int>  ints = new MyArray<int>();
+            MyArray<int> ints = new MyArray<int>();
             int capacity = ints.Capacity;
             Assert.Equal(7, capacity);
         }
@@ -24,9 +24,9 @@ namespace Testing4_1
         public void CapacityCollection()
         {
             bool[] boolsToAdd = new bool[4];
-            for (int i = 0; i< 4; i++)
+            for (int i = 0; i < 4; i++)
             {
-                int y = Random.Shared.Next(0,2);
+                int y = Random.Shared.Next(0, 2);
                 boolsToAdd[i] = y == 1;
             }
             MyArray<bool> bools = new MyArray<bool>(boolsToAdd);
@@ -60,11 +60,11 @@ namespace Testing4_1
         public void Add()
         {
             MyArray<string> strings = [];
-            for (int i = 0; i< 5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 strings.Add(i.ToString());
             }
-            string[] collection = {"0", "1", "2","3", "4"};
+            string[] collection = { "0", "1", "2", "3", "4" };
             Assert.Equal(strings.ToArray(), collection);
         }
         [Fact]
@@ -76,7 +76,7 @@ namespace Testing4_1
                 strings.Add(i.ToString());
             }
             strings.Add("5");
-            string[] collection = { "0", "1", "2", "3", "4", "5"};
+            string[] collection = { "0", "1", "2", "3", "4", "5" };
             Assert.Equal(strings.ToArray(), collection);
         }
 
@@ -109,9 +109,9 @@ namespace Testing4_1
                 arr.Add(i);
             }
             MyArray<int> ints = new MyArray<int>(4);
-            for (int i = 0; i< 4; i++)
+            for (int i = 0; i < 4; i++)
             {
-                ints.Add(i*2);
+                ints.Add(i * 2);
             }
             arr.AddRange(ints);
             int[] collection = { 0, 2, 4, 6, 0, 1, 2, 3, 4 };
@@ -131,7 +131,7 @@ namespace Testing4_1
                 ints.Add(i);
             }
             arr.AddRange(ints);
-            int[] collection = {0, 1, 2, 3, 4, 0, 1, 2, 3, 4};
+            int[] collection = { 0, 1, 2, 3, 4, 0, 1, 2, 3, 4 };
             Assert.Equal(collection, arr.ToArray());
         }
         #endregion
@@ -141,7 +141,7 @@ namespace Testing4_1
         public void AllTrue()
         {
             MyArray<byte> bytes = new MyArray<byte>(5);
-            for (int i = 0; i< 5;i++)
+            for (int i = 0; i < 5; i++)
             {
                 bytes[i] = 0;
             }
@@ -166,7 +166,7 @@ namespace Testing4_1
         {
             Func<string, bool> condition = Condition;
             MyArray<string> strings = new MyArray<string>(3);
-            for (int i = 0; i< 2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 strings.Add("ab");
             }
@@ -199,7 +199,7 @@ namespace Testing4_1
             Func<char[], char> checking = null;
             MyArray<char> chars = new MyArray<char>(2);
             bool result = false;
-            for (int i = 0; i< 2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 chars.Add('i');
             }
@@ -278,7 +278,7 @@ namespace Testing4_1
             {
                 chars.Add('i');
             }
-            int result = chars.CountByWhere(x => x=='a');
+            int result = chars.CountByWhere(x => x == 'a');
             Assert.Equal(0, result);
         }
         [Fact]
@@ -293,7 +293,73 @@ namespace Testing4_1
             Assert.Equal(2, result);
         }
         #endregion
+        //add ContatinsNull if necessary
+        #region Contains
+        [Fact]
+        public void ContainsNullFalse()
+        {
+            MyArray<string> strings = new MyArray<string>(2);
+            for (int i = 0; i < 2; i++)
+            {
+                strings.Add("abc");
+            }
+            Assert.False(strings.Contains(null));
+        }
+        [Fact]
+        public void ContainsNullTrue()
+        {
+            MyArray<string> strings = new MyArray<string>(2);
+            for (int i = 0; i < 2; i++)
+            {
+                strings.Add(null);
+            }
+            Assert.True(strings.Contains(null));
+        }
 
-
+        [Fact]
+        public void ContainsTrue()
+        {
+            MyArray<char> chars = [];
+            for (int i = 0; i < 2; i++)
+            {
+                chars.Add('i');
+            }
+            char item = 'i';
+            Assert.True(chars.Contains(item));
+        }
+        [Fact]
+        public void ContainsFalse()
+        {
+            MyArray<char> chars = [];
+            for (int i = 0; i < 2; i++)
+            {
+                chars.Add('i');
+            }
+            char item = 'a';
+            Assert.False(chars.Contains(item));
+        }
+        #endregion
+        #region CopyTo
+        [Fact]
+        public void CopyTo()
+        {
+            MyArray<string> strings = [];
+            for (int i = 0; i < 5; i++)
+            {
+                strings.Add(i.ToString());
+            }
+            string[] insertingArray = new string[7];
+            strings.CopyTo(insertingArray, 1);
+            string result = "";
+            for(int i = 0; i< 7;i++)
+            {
+                if (insertingArray[i]!="")
+                {
+                    result+= insertingArray[i];
+                }
+            }
+            Assert.Equal("01234", result);
+        }
+        #endregion
     }
 }
