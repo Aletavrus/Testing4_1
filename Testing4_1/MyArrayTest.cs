@@ -111,7 +111,7 @@ namespace Testing4_1
             MyArray<int> ints = new MyArray<int>(4);
             for (int i = 0; i< 4; i++)
             {
-                ints[i] = i*2;
+                ints.Add(i*2);
             }
             arr.AddRange(ints);
             int[] collection = { 0, 2, 4, 6, 0, 1, 2, 3, 4 };
@@ -125,10 +125,10 @@ namespace Testing4_1
             {
                 arr.Add(i);
             }
-            MyArray<int> ints = new MyArray<int>(5);
+            MyArray<int> ints = [];
             for (int i = 0; i < 5; i++)
             {
-                ints[i] = i;
+                ints.Add(i);
             }
             arr.AddRange(ints);
             int[] collection = {0, 1, 2, 3, 4, 0, 1, 2, 3, 4};
@@ -154,7 +154,7 @@ namespace Testing4_1
             MyArray<byte> bytes = new MyArray<byte>(5);
             for (int i = 0; i < 5; i++)
             {
-                bytes[i] = 0;
+                bytes.Add(0);
             }
             bool result = bytes.All(x => x == 1);
             Assert.False(result);
@@ -179,6 +179,121 @@ namespace Testing4_1
         {
             return x.Length > 5;
         }
+        [Fact]
+        public void AnyFalse()
+        {
+            MyArray<byte> bytes = new MyArray<byte>(5);
+            for (int i = 0; i < 5; i++)
+            {
+                bytes.Add(0);
+            }
+            bool result = bytes.Any(x => x == 1);
+            Assert.False(result);
+        }
         #endregion
+
+        #region Average
+        [Fact]
+        public void AverageException()
+        {
+            Func<char[], char> checking = null;
+            MyArray<char> chars = new MyArray<char>(2);
+            bool result = false;
+            for (int i = 0; i< 2; i++)
+            {
+                chars.Add('i');
+            }
+            try
+            {
+                chars.Average(checking);
+            }
+            catch (ArgumentNullException)
+            {
+                result = true;
+            }
+            Assert.True(result);
+        }
+        [Fact]
+        public void Average()
+        {
+            MyArray<int> arr = new MyArray<int>(5);
+            for (int i = 0; i < 5; i++)
+            {
+                arr.Add(i);
+            }
+            double result = arr.Average((array) =>
+            {
+                int average = 0;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    average += array[i];
+                }
+                return average / array.Length;
+            });
+            Assert.Equal(2.0, result);
+        }
+        #endregion
+
+        #region Clear
+        [Fact]
+        public void Clear()
+        {
+            MyArray<int> arr = [];
+            for (int i = 0; i < 5; i++)
+            {
+                arr.Add(i);
+            }
+            arr.Clear();
+            int size = arr.Count;
+            Assert.Equal(0, size);
+        }
+        #endregion
+
+        #region CountByWhere
+        [Fact]
+        public void CountByWhereException()
+        {
+            Func<char, bool> checking = null;
+            MyArray<char> chars = new MyArray<char>(2);
+            bool result = false;
+            for (int i = 0; i < 2; i++)
+            {
+                chars.Add('i');
+            }
+            try
+            {
+                chars.CountByWhere(checking);
+            }
+            catch (ArgumentNullException)
+            {
+                result = true;
+            }
+            Assert.True(result);
+        }
+        [Fact]
+        public void CountByWhereZero()
+        {
+            MyArray<char> chars = new MyArray<char>(2);
+            for (int i = 0; i < 2; i++)
+            {
+                chars.Add('i');
+            }
+            int result = chars.CountByWhere(x => x=='a');
+            Assert.Equal(0, result);
+        }
+        [Fact]
+        public void CountByWhere()
+        {
+            MyArray<char> chars = new MyArray<char>(2);
+            for (int i = 0; i < 2; i++)
+            {
+                chars.Add('i');
+            }
+            int result = chars.CountByWhere(x => x == 'i');
+            Assert.Equal(2, result);
+        }
+        #endregion
+
+
     }
 }
