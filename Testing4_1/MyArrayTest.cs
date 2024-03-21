@@ -610,8 +610,71 @@ namespace Testing4_1
             {
                 strings.Add($"{i}");
             }
-            
+            Func<string, int> projector = null;
+            Assert.Throws<ArgumentNullException>(() => strings.Project<int>(projector));
         }
+        [Fact]
+        public void Project()
+        {
+            MyArray<string> strings = [];
+            for (int i = 0; i < 4; i++)
+            {
+                strings.Add($"{i+1}");
+            }
+            Func<string, int> projector = ToInt;
+            int[] collection = {1, 2, 3, 4};
+            Assert.Equal(collection, strings.Project<int>(projector));
+        }
+        private int ToInt(string el)
+        {
+            bool res = int.TryParse(el, out int number);
+            if (res)
+            {
+                return number;
+            }
+            return 0;
+        }
+        #endregion
+
+        #region Remove
+        [Fact]
+        public void RemoveSuccess()
+        {
+            MyArray<int> nums = [];
+            for (int i = 0; i < 6; i++)
+            {
+                nums.Add(i);
+            }
+            Assert.True(nums.Remove(4));
+        }
+        [Fact]
+        public void RemoveFail()
+        {
+            MyArray<int> nums = [];
+            for (int i = 0; i < 6; i++)
+            {
+                nums.Add(i);
+            }
+            Assert.False(nums.Remove(7));
+        }
+        #endregion
+
+        #region RemoveAt
+        [Fact]
+        public void RemoveAt()
+        {
+            MyArray<int> nums = [];
+            for (int i = 0; i < 6; i++)
+            {
+                nums.Add(i);
+            }
+            nums.RemoveAt(3);
+            int[] collection = {0, 1, 2, 4, 5, 0};
+            Assert.Equal(collection, nums.ToArray());
+        }
+        #endregion
+
+        #region RemoveRange
 
         #endregion
     }
