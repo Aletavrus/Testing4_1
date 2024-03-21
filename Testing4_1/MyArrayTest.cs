@@ -566,12 +566,53 @@ namespace Testing4_1
             for (int i = 0; i < 3; i++)
             {
                 int item = i++;
-                nums.Add(i);
+                nums.Add(item);
             }
             Func<int, double> projector = (x) => x / 1.5;
             double expected = (double)2/3;
             Assert.Equal(expected, nums.Min(projector));
         }
+        #endregion
+
+        #region OfType
+        [Fact]
+        public void OfTypeAll()
+        {
+            MyArray<int> nums = [];
+            for (int i = 0; i < 3; i++)
+            {
+                int item = i++;
+                nums.Add(item);
+            }
+            int[] collection = {1,2, 3};
+            Assert.Equal(collection, nums.OfType<int>());
+        }
+        [Fact]
+        public void OfTypeNone()
+        {
+            MyArray<int> nums = [];
+            for (int i = 0; i < 3; i++)
+            {
+                int item = i++;
+                nums.Add(item);
+            }
+            string[] collection = {};
+            Assert.Equal(collection, nums.OfType<string>());
+        }
+        #endregion
+
+        #region Project
+        [Fact]
+        public void ProjectException()
+        {
+            MyArray<string> strings = [];
+            for (int i = 0; i < 6; i++)
+            {
+                strings.Add($"{i}");
+            }
+            
+        }
+
         #endregion
     }
 }
