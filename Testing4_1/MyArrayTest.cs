@@ -7,6 +7,18 @@ namespace Testing4_1
 {
     public class MyArrayTest
     {
+        #region MyArray
+        [Fact]
+        public void MyArrayException()
+        {
+            Action action = () =>
+            {
+                MyArray<string> strings = new MyArray<string>(-1);
+            };
+            Assert.Throws<ArgumentOutOfRangeException>(action);
+        }
+
+        #endregion
         #region Capacity
         [Fact]
         public void CapacityDefault()
@@ -45,15 +57,7 @@ namespace Testing4_1
             {
                 ints.Add(i);
             }
-            try
-            {
-                ints.Capacity = value;
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                result = true;
-            }
-            Assert.True(result);
+            Assert.Throws<ArgumentOutOfRangeException>(()=>ints.Capacity);
         }
         #endregion
 
@@ -675,7 +679,51 @@ namespace Testing4_1
         #endregion
 
         #region RemoveRange
+        [Fact]
+        public void RemoveRangeNegativeIndex()
+        {
+            string[] collection = {"ab", "bc", "dog", "programmer", "candy"};
+            MyArray<string> strings = new MyArray<string>(collection);
+            Action action = () => strings.RemoveRange(-1, 1);
+            Assert.Throws<ArgumentOutOfRangeException>(action);
+        }
+        [Fact]
+        public void RemoveRangeNegativeCount()
+        {
+            string[] collection = {"ab", "bc", "dog", "programmer", "candy"};
+            MyArray<string> strings = new MyArray<string>(collection);
+            Action action = () => strings.RemoveRange(0, -1);
+            Assert.Throws<ArgumentOutOfRangeException>(action);
+        }
+        [Fact]
+        public void RemoveRangeNegativeDifference()
+        {
+            string[] collection = {"ab", "bc", "dog", "programmer", "candy"};
+            MyArray<string> strings = new MyArray<string>(collection);
+            Action action = () => strings.RemoveRange(3, 5);
+            Assert.Throws<ArgumentOutOfRangeException>(action);
+        }
+        [Fact]
+        public void RemoveRange()
+        {
+            string[] collection = {"horse", "cat", "dog", "programmer", "student"};
+            MyArray<string> strings = new MyArray<string>(collection);
+            strings.RemoveRange(1, 2);
+            string[] result = {"horse", "programmer", "student", null, null};
+            Assert.Equal(result, strings.ToArray());
+        }
+        #endregion
 
+        #region Reverse
+        [Fact]
+        public void Reverse()
+        {
+            string[] collection = {"horse", "cat", "dog", "programmer", "student"};
+            MyArray<string> strings = new MyArray<string>(collection);
+            strings.Reverse();
+            string[] result = {"student", "programmer", "dog", "cat", "horse"};
+            Assert.Equal(result, strings.ToArray());
+        }
         #endregion
     }
 }
