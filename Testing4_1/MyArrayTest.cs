@@ -683,7 +683,11 @@ namespace Testing4_1
         public void RemoveRangeNegativeIndex()
         {
             string[] collection = {"ab", "bc", "dog", "programmer", "candy"};
-            MyArray<string> strings = new MyArray<string>(collection);
+            MyArray<string> strings = new MyArray<string>(5);
+            for (int i = 0; i<5; i++)
+            {
+                strings.Add(collection[i]);
+            }
             Action action = () => strings.RemoveRange(-1, 1);
             Assert.Throws<ArgumentOutOfRangeException>(action);
         }
@@ -691,7 +695,11 @@ namespace Testing4_1
         public void RemoveRangeNegativeCount()
         {
             string[] collection = {"ab", "bc", "dog", "programmer", "candy"};
-            MyArray<string> strings = new MyArray<string>(collection);
+            MyArray<string> strings = new MyArray<string>(5);
+            for (int i = 0; i<5; i++)
+            {
+                strings.Add(collection[i]);
+            }
             Action action = () => strings.RemoveRange(0, -1);
             Assert.Throws<ArgumentOutOfRangeException>(action);
         }
@@ -699,7 +707,11 @@ namespace Testing4_1
         public void RemoveRangeNegativeDifference()
         {
             string[] collection = {"ab", "bc", "dog", "programmer", "candy"};
-            MyArray<string> strings = new MyArray<string>(collection);
+            MyArray<string> strings = new MyArray<string>(5);
+            for (int i = 0; i<5; i++)
+            {
+                strings.Add(collection[i]);
+            }
             Action action = () => strings.RemoveRange(3, 5);
             Assert.Throws<ArgumentOutOfRangeException>(action);
         }
@@ -707,7 +719,11 @@ namespace Testing4_1
         public void RemoveRange()
         {
             string[] collection = {"horse", "cat", "dog", "programmer", "student"};
-            MyArray<string> strings = new MyArray<string>(collection);
+            MyArray<string> strings = new MyArray<string>(5);
+            for (int i = 0; i<5; i++)
+            {
+                strings.Add(collection[i]);
+            }
             strings.RemoveRange(1, 2);
             string[] result = {"horse", "programmer", "student", null, null};
             Assert.Equal(result, strings.ToArray());
@@ -719,11 +735,77 @@ namespace Testing4_1
         public void Reverse()
         {
             string[] collection = {"horse", "cat", "dog", "programmer", "student"};
-            MyArray<string> strings = new MyArray<string>(collection);
+            MyArray<string> strings = new MyArray<string>(5);
+            for (int i = 0; i<5; i++)
+            {
+                strings.Add(collection[i]);
+            }
             strings.Reverse();
             string[] result = {"student", "programmer", "dog", "cat", "horse"};
             Assert.Equal(result, strings.ToArray());
         }
+        #endregion
+
+        #region Take
+        [Fact]
+        public void TakeMore()
+        {
+            string[] collection = {"horse", "cat", "dog", "programmer", "student"};
+            MyArray<string> strings = new MyArray<string>(5);
+            for (int i = 0; i<5; i++)
+            {
+                strings.Add(collection[i]);
+            }
+            string[] output = strings.Take(2, 3);
+            string[] result = {"dog", "programmer", "student"};
+            Assert.Equal(result, output);
+        }
+
+        [Fact]
+        public void TakeLess()
+        {
+            string[] collection = {"horse", "cat", "dog", "programmer", "student"};
+            MyArray<string> strings = new MyArray<string>(5);
+            for (int i = 0; i<5; i++)
+            {
+                strings.Add(collection[i]);
+            }
+            string[] output = strings.Take(2, 2);
+            string[] result = {"dog", "programmer"};
+            Assert.Equal(result, output);
+        }
+        #endregion
+
+        #region Where
+        [Fact]
+        public void WhereException()
+        {
+            MyArray<int> nums = new MyArray<int>(6);
+            for (int i = 0; i < 6; i++)
+            {
+                nums.Add(i);
+            }
+            Func<int, bool> condition = null;
+            Assert.Throws<ArgumentNullException>(() => nums.Where(condition));
+        }
+        
+        [Fact]
+        public void Where()
+        {
+            MyArray<int> nums = new MyArray<int>(6);
+            for (int i = 0; i < 6; i++)
+            {
+                nums.Add(i);
+            }
+            Func<int, bool> condition = (x) =>
+            {
+                return x%2==0;
+            };
+            int[] output = nums.Where(condition);
+            int[] result = {0, 2, 4};
+            Assert.Equal(result, output);
+        }
+
         #endregion
     }
 }
