@@ -52,12 +52,11 @@ namespace Testing4_1
         {
             MyArray<int> ints = new MyArray<int>(5);
             int value = 0;
-            bool result = false;
             for (int i = 0; i < 5; i++)
             {
                 ints.Add(i);
             }
-            Assert.Throws<ArgumentOutOfRangeException>(()=>ints.Capacity);
+            Assert.Throws<ArgumentOutOfRangeException>(()=>ints.Capacity=value);
         }
         #endregion
 
@@ -569,7 +568,7 @@ namespace Testing4_1
             MyArray<int> nums = [];
             for (int i = 0; i < 3; i++)
             {
-                int item = i++;
+                int item = i+1;
                 nums.Add(item);
             }
             Func<int, double> projector = (x) => x / 1.5;
@@ -582,10 +581,10 @@ namespace Testing4_1
         [Fact]
         public void OfTypeAll()
         {
-            MyArray<int> nums = [];
+            MyArray<int> nums = new MyArray<int>(3);
             for (int i = 0; i < 3; i++)
             {
-                int item = i++;
+                int item = i+1;
                 nums.Add(item);
             }
             int[] collection = {1,2, 3};
@@ -667,13 +666,13 @@ namespace Testing4_1
         [Fact]
         public void RemoveAt()
         {
-            MyArray<int> nums = [];
+            MyArray<int> nums = new MyArray<int>(6);
             for (int i = 0; i < 6; i++)
             {
                 nums.Add(i);
             }
             nums.RemoveAt(3);
-            int[] collection = {0, 1, 2, 4, 5, 0};
+            int[] collection = {0, 1, 2, 4, 5};
             Assert.Equal(collection, nums.ToArray());
         }
         #endregion
@@ -724,8 +723,8 @@ namespace Testing4_1
             {
                 strings.Add(collection[i]);
             }
-            strings.RemoveRange(1, 2);
-            string[] result = {"horse", "programmer", "student", null, null};
+            strings.RemoveRange(0, 2);
+            string[] result = {"dog", "programmer", "student"};
             Assert.Equal(result, strings.ToArray());
         }
         #endregion
